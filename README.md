@@ -1,2 +1,2 @@
 # projectPP
- Simple bank
+ Simple bank application in Spring
