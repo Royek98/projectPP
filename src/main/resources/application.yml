@@ -1,0 +1,64 @@
+#spring.datasource.driverClassName=org.postgresql.Driver
+#spring.datasource.url=jdbc:postgresql://localhost:5432/projectPP
+#spring.datasource.username=postgres
+#spring.datasource.password=admin
+#
+#spring.jpa.show-sql=true
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+#
+#spring.profiles.active=usersInDB
+#
+#spring.mail.host=localhost
+#spring.mail.port=1025
+#spring.mail.username=SigmaBank
+#spring.activemq.password=sigma
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      enabled: true
+  profiles:
+    active: usersInDB
+  messages:
+    basename: errors-messages
+  datasource:
+    password: admin
+    url: jdbc:postgresql://localhost:5432/projectPP
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+#spring.security.user.name=admin
+#spring.security.user.password=admin

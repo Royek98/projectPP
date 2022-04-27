@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='contacts', pageTitle='Contacts'">
+<head>
+    <title>[[${pageTitle}]]</title>
+
+</head>
+<body>
+<div layout:fragment="custom-content">
+    <br/>
+    <form th:object="${newContact}" th:action="@{contacts}" method="post" style="width: 40%; margin-left: auto; margin-right: auto;">
+        <input type="hidden" th:field="*{user}">
+        <input type="hidden" th:field="*{id}">
+        <input class="form-control" type="text" th:field="*{name}" placeholder="Name"> <br/>
+        <input class="form-control" type="text" th:field="*{description}" placeholder="Description"><br/>
+        <input class="form-control" type="text" th:field="*{card}" placeholder="Card number"><br/>
+        <input type="submit" value="Add contact" class="btn btn-primary">
+    </form>
+<br/>
+    <div>
+        <h4 style="text-align: center; ">My cotacts</h4>
+        <table style="text-align: center; margin-right: auto; margin-left: auto;">
+            <div th:each="c : ${myContacts}">
+                <tr>
+                    <td>
+                        <span th:text="${c.name}"></span> <br/>
+                        <span th:text="${c.description}"></span> <br/>
+                        <span th:text="${c.card}"></span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/editContact(id=*{c.id})}">Edit</a>
+                        <a class="btn btn-secondary" th:href="@{/deleteContact(id=*{c.id})}">Delete</a>
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </div>
+</div>
+</body>
+</html>

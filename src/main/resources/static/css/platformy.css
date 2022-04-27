@@ -1,0 +1,50 @@
+body {
+    background-size: 50%, cover;
+    /*background-attachment: fixed;*/
+    /*background: url("bg.png") no-repeat bottom right fixed, radial-gradient(circle at 75% 80%, rgba(128, 128, 128, 1) 8%, rgba(35, 35, 35, 0.91) 98%) fixed no-repeat;*/
+    background-image: url(bg.png), radial-gradient(circle at 75% 80%, rgba(128, 128, 128, 1) 8%, rgba(35, 35, 35, 0.91) 98%);
+    background-attachment: fixed, fixed;
+    background-repeat: no-repeat, no-repeat;
+    background-position: bottom right;
+}
+
+#bankName {
+    color: #15abe4;
+    font-family: 'Barlow', sans-serif;
+    font-size: calc(7vw + 3vh);
+    margin-left: 10%;
+}
+
+#quoteSigma {
+    color: white;
+    font-family: 'Barlow', sans-serif;
+    margin-left: 10%;
+    font-size: calc(2vw + 1vh);
+}
+
+.loginBtn {
+    margin-left: 10%;
+    margin-top: 3%;
+}
+
+.regBtn {
+    margin-left: 2%;
+    margin-top: 3%;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        background-size: 100%, cover;
+    }
+    #bankName {
+        margin-left: 10%;
+        font-size: calc(7vw + 5vh);
+    }
+}
+
+.messCoockie {
+    color: #15abe4;
+    font-family: 'Barlow', sans-serif;
+    font-size: calc(1vw + 1vh);
+    margin-left: 10%;
+}
+

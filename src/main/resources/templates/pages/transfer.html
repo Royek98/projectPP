@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='home', pageTitle='Transfer'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>[[${pageTitle}]]</title>
+
+</head>
+<body>
+<div layout:fragment="custom-content">
+
+        <form th:action="@{/transfer}" method="post" th:object="${newTransfer}"
+              style="width: 60%; margin-right: auto; margin-left: auto;"
+              sec:authorize="hasRole('USER')">
+            Choose your credit card: <br/>
+            <select id="card" class="form-control" th:field="*{sender}">
+                <option th:each="c:${cards}" th:value="${c.number}">
+                    [[${c.number}]] ([[${c.cash}]] [[${c.currency}]])
+                </option>
+            </select>
+            Receiver:
+            <select id="fromCon" class="form-control" onclick="change()">
+                <option value="">Not from contacts</option>
+                <option th:each="c : ${contacts}" th:value="${c.card}">
+                    ([[${c.name}]] [[${c.description}]]) [[${c.card}]]
+                </option>
+            </select>
+            <input class="form-control" type="text" id="receiver" th:field="*{receiver}">
+            <p class="errors" th:if="${#fields.hasErrors('receiver')}" th:each="err : ${#fields.errors('receiver')}" th:text="${err}"></p>
+            Cash: <input class="form-control" type='number' min="0" step='0.01' placeholder='0.00' th:field="*{cash}">
+            Message: <input class="form-control" type="text" th:field="*{message}"> <br/>
+            <input type="submit" value="Send" class="btn btn-primary">
+
+        </form>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <table class="table table-hover table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Email</th>
+            </tr>
+            </thead>
+            <tr th:each="t : ${allCards}">
+                <td th:text="*{t.number}"></td>
+                <td th:text="*{t.user.email}"></td>
+                <td><a class="btn btn-light" onclick="openForm(this)" th:id="*{t.id}">Transfer</a></td>
+                <div class="form-popup" th:id="myForm[+*{t.id}+]" style="display: none;">
+                    <form th:action="@{/transferAdmin}" class="form-container">
+                        <input type="hidden" name="cardId" th:value="*{t.id}">
+                        <input class="form-control" type="number" name="cash" min="0.01" step='0.01' placeholder='0.01'>
+                        <input  class="btn btn-primary" type="submit" value="Transfer">
+                        <button type="button" class="btn cancel" onclick="closeForm(this)" th:id="*{t.id}">Close</button>
+                    </form>
+                </div>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    function change() {
+        var e = document.getElementById("fromCon").value;
+        document.getElementById('receiver').value = e;
+    }
+
+    function openForm(elem) {
+        document.getElementById("myForm[" + elem.id + "]").style.display = "block";
+    }
+
+    function closeForm(elem) {
+        document.getElementById("myForm[" + elem.id + "]").style.display = "none";
+    }
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='cards', pageTitle='Credit cards'">
+<head>
+    <title>[[${pageTitle}]]</title>
+
+</head>
+<body style="overflow-x: hidden;">
+<div layout:fragment="custom-content">
+
+    <form th:object="${newCard}" method="post" th:action="@{/cards}" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{user}">
+        <select class="form-control" th:field="*{currency}" style="width: 20%;">
+            <option th:each="c : ${T(com.rojek.projectpp.Pages.Cards.Models.Currency).values()}"
+                    th:text="${c}" th:value="${c}"></option>
+        </select>
+        <input type="file" name="multipartFile" accept=".gif,.png,.jpeg,.jpg"> <br/>
+        <input class="btn btn-primary" type="submit" value="Add credit card">
+    </form>
+
+    <div th:each="c: ${cards}">
+        <br/>
+        <div class="credit-card" th:if="*{c.fileName != null}">
+            <label class="credit-card-logo">SigmaBank</label>
+            <label class="credit-card-number" th:text="${c.number}"></label>
+            <label class="credit-card-currency" th:text="${c.currency}"></label>
+            <img th:src="${'/img/'+c.fileName}" class="credit-card-img">
+        </div>
+        <div class="credit-card" th:if="*{c.fileName == null}">
+            <label class="credit-card-logo">SigmaBank</label>
+            <label class="credit-card-number" th:text="${c.number}"></label>
+            <label class="credit-card-currency" th:text="${c.currency}"></label>
+            <img th:src="${'/img/default.png'}" class="credit-card-img">
+        </div>
+    </div>
+    <br/><br/><br/><br/>
+    <br/>
+</div>
+</body>
+</html>

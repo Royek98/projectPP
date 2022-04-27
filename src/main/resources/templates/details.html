@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <link href="/css/login.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>Details</title>
+</head>
+
+<body>
+<div class="main">
+    <div class="container">
+
+        <div class="middle">
+            <div id="login">
+
+                <form th:action="@{/details(username=${userDetails.user.login})}" method="post" th:object="${userDetails}">
+                    <fieldset class="clearfix">
+                        <input type="hidden" th:field="*{user}">
+                        <p ><span class="fa fa-user"></span><input type="text" th:field="*{name}" Placeholder="Name" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                        <p class="errors" th:if="${#fields.hasErrors('name')}" th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+                        <p ><span class="fa fa-user"></span><input type="text" th:field="*{surName}" Placeholder="Surname" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                        <p class="errors" th:if="${#fields.hasErrors('surName')}" th:each="err : ${#fields.errors('surName')}" th:text="${err}"></p>
+                        <p ><span class="fa fa-user"></span><input type="text" th:field="*{pesel}" Placeholder="Pesel" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                        <p class="errors" th:if="${#fields.hasErrors('pesel')}" th:each="err : ${#fields.errors('pesel')}" th:text="${err}"></p>
+                        <p ><span class="fa fa-mobile"></span><input type="text" th:field="*{phone}" Placeholder="Phone" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                        <p class="errors" th:if="${#fields.hasErrors('phone')}" th:each="err : ${#fields.errors('phone')}" th:text="${err}"></p>
+                        <p ><span class="fa fa-map-marker"></span><input type="text" th:field="*{address}" Placeholder="00-000;City;Street;Nr" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+                        <p style="color:red" th:if="${#fields.hasErrors('address')}" th:each="err : ${#fields.errors('address')}" th:text="${err}"></p>
+                        <div>
+                            <span style="width:40%; text-align:right; display: inline-block;"><input type="submit" value="Accept"></span>
+                        </div> <br/>
+
+                        <a th:href="@{/logout}" style="font-size: 18px"> Cancel </a>
+                    </fieldset>
+                    <div class="clearfix"></div>
+                </form>
+
+                <div class="clearfix"></div>
+
+            </div> <!-- end login -->
+            <div class="logo"><a href="/" id="bankName">SigmaBank</a>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

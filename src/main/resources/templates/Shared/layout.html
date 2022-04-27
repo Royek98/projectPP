@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <div th:insert="Shared/Elements :: head-Css"/>
+</head>
+<body>
+    <div th:replace="~{Shared/Elements :: menu(${pageName})}"></div>
+
+    <div class="custom-content" layout:fragment="custom-content">This will be replaced</div>
+
+    <div th:insert="Shared/Elements :: footer"/>
+</body>
+</html>

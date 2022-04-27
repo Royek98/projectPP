@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='home', pageTitle='Home'"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>[[${pageTitle}]]</title>
+
+</head>
+<body>
+    <div layout:fragment="custom-content">
+        <div sec:authorize="hasRole('USER')">
+            <br/>
+            <h2 class="hello">Hello <span th:text="${name}"></span></h2>
+            <center><a th:href="@{/transfer}" class="btn btn-warning homeButtons">Transfer</a> &nbsp;
+                <a th:href="@{/history}" class="btn btn-info homeButtons">History</a></center>
+<br/>
+            <h5 class="hello">Your account balance:</h5>
+            <div class="homeCards" th:each="c: ${cards}">
+                <span th:text="${c.number}"></span>	&nbsp;
+                <span class="cash">
+<!--                    <span th:text="${c.cash}"></span> <span style="font-size: 17px;" th:text="${c.currency}"></span>-->
+                    <span th:inline="text">[[${#numbers.formatDecimal(c.cash, 1, 'DEFAULT', 2, 'POINT')}]]</span>
+                    <span style="font-size: 17px;" th:text="${c.currency}"></span>
+                </span>
+            </div>
+        </div>
+
+        <div sec:authorize="hasRole('ADMIN')">
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Sender</th>
+                    <th scope="col">Receiver</th>
+                    <th scope="col">Cash</th>
+                    <th scope="col">Date</th>
+                </tr>
+                </thead>
+                <tr th:each="w : ${inWaiting}" scope="row">
+                    <td th:text="*{w.sender}"></td>
+                    <td th:text="*{w.receiver}"></td>
+                    <td th:inline="text">[[${#numbers.formatDecimal(w.cash, 1, 'DEFAULT', 2, 'POINT')}]] </td>
+                    <td th:text="*{w.date}"></td>
+                    <td><a class="btn btn-light" th:href="@{/changeStatus(id=*{w.id})}">Accept</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

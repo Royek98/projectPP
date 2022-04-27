@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Shared/layout"
+      th:with="pageName='home', pageTitle='History'">
+<head>
+    <title>[[${pageTitle}]]</title>
+
+</head>
+<body>
+<div layout:fragment="custom-content">
+
+    <form th:object="${filter}" method="post" th:action="@{/history}" style="width: 60%; margin-left: auto; margin-right: auto;">
+        Search by phrase: <br/>
+        <input class="form-control" type="text" th:field="*{phrase}" placeholder="sender, receiver..."> <br/>
+        Search by status: <br/>
+        <div th:each="c : ${T(com.rojek.projectpp.Pages.Transfer.Models.Status).values()}">
+            <input class="form-check-input" type="checkbox" th:id="${c}"
+                   th:value="${c}" th:field="*{statuses}">
+            <label class="form-check-label" th:for="${c}" th:text="${c}"></label>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Search">
+    </form>
+<br/>
+        <table class="table table-hover table-dark" style="width: 95%; margin-right: auto; margin-left: auto;">
+            <thead>
+            <tr>
+                <th scope="col">Sender</th>
+                <th scope="col">Receiver</th>
+                <th scope="col">Message</th>
+                <th scope="col">Cash</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tr th:each="t : ${transfers}" scope="row">
+                <td th:text="*{t.sender}"></td>
+                <td th:text="*{t.receiver}"></td>
+                <td th:text="*{t.message}"></td>
+                <td th:inline="text">[[${#numbers.formatDecimal(t.cash, 1, 'DEFAULT', 2, 'POINT')}]] </td>
+                <td th:text="*{t.date}"></td>
+                <td th:text="*{t.status}"></td>
+                <td><a th:href="@{/print(id=*{t.id})}">Print</a></td>
+            </tr>
+        </table>
+
+</div>
+</body>
+</html>
