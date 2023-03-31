@@ -20,7 +20,7 @@ Users can also view their transaction history, print transactions to pdf files, 
  - Contacts: allows users to save other users' information (which can be used in transfers to speed up the process).
 
 # Detailed information
-## User's perspective
+## User perspective
 ### User registration
 1. Registration Form <br/>
    The registration form allows users to enter their personal information, including their name, email address, and password. Once the user has completed the form, they can click the 'Join' button to submit their information.
